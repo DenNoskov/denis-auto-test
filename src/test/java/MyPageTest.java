@@ -11,7 +11,7 @@ public class MyPageTest {
         open("https://github.com/");
         $("[href='/login']").click();
         $("[id='login_field']").sendKeys("DenNoskov");
-        $("[id='password']").sendKeys("Zaken200992");
+        $("[id='password']").sendKeys("123456789");
         $("[name='commit']").click();
         $(".Header").shouldBe(Condition.visible);
         $("[aria-label='View profile and more']").click();
@@ -19,4 +19,3 @@ public class MyPageTest {
         $("[class='btn btn-block js-profile-editable-edit-button']").shouldBe(Condition.visible);
     }
 }
-
