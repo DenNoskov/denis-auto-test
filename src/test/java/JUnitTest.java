@@ -76,7 +76,7 @@ public class JUnitTest {
 
                 arguments(
                         "по цифрам",
-                        "1701",
+                        "1739",
                         ""
                 ),
 
