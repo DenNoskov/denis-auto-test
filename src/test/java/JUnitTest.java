@@ -8,6 +8,7 @@ import org.openqa.selenium.Keys;
 
 import java.util.stream.Stream;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
@@ -41,45 +42,42 @@ public class JUnitTest {
         @MethodSource("correctData")
         @ParameterizedTest(name = "{displayName} {0}")
         @DisplayName("Позитивня проверка поиска по релизам в репозитории:")
-        public void positiveVerificationOfTheSearch(String type, String searchData){
+        public void positiveVerificationOfTheSearch(String type, String searchData, String searchResults){
             TestPages.repositoriesPage.jUnitButton()
                     .click();
             TestPages.repositoriesPage.readmeLink()
                     .shouldBe(visible);
-            TestPages.repositoriesPage.issuesButton()
+            TestPages.repositoriesPage.releaseButton()
                     .click();
-            TestPages.repositoriesPage.newIssueButtonText()
+            TestPages.repositoriesPage.examinationReleasesButton()
                     .shouldBe(visible);
             TestPages.repositoriesPage.inputField()
                     .click();
             TestPages.repositoriesPage.inputField()
-                    .sendKeys(searchData);
-            TestPages.repositoriesPage.inputField()
-                    .sendKeys(Keys.ENTER);
-           TestPages.repositoriesPage.noResultsText()
-                    .shouldNotBe(visible);
+                    .sendKeys(searchData + Keys.ENTER);
+           TestPages.repositoriesPage.ResultsText()
+                    .shouldBe(visible)
+                    .shouldHave(text(searchResults));
     }
 
     static Stream<Arguments> correctData() {
         return Stream.of(
                 arguments(
                         "по цифрам и полному слову",
-                        "1626 message"
-                ),
-
-                arguments(
-                        "по цифрам и части слова",
-                        "1619 Fea"
+                        "JUnit 4.12 Beta 2",
+                        "JUnit 4.12 Beta 2"
                 ),
 
                 arguments(
                         "по цифрам",
-                        "1701"
+                        "4.12",
+                        "JUnit 4.12"
                 ),
 
                 arguments(
                         "по слову",
-                        "Problem"
+                        "Beta",
+                        "Beta"
                 )
         );
     }

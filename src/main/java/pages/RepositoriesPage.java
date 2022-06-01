@@ -19,11 +19,11 @@ public class RepositoriesPage {
     public SelenideElement fixturesBranchButton() {
         return $(byText("fixtures")).as("кнопка переключения на ветку 'Фикстура'");
     }
-    public SelenideElement issuesButton() {
-        return $("[id='issues-tab']").as("кнопка 'Релизов'");
+    public SelenideElement releaseButton() {
+        return  $(byText("Releases")).as("кнопка 'Релизов'");
     }
     public SelenideElement inputField() {
-        return $("#js-issues-search").as("поле ввода данных");
+        return $("[class='form-control subnav-search-input width-full']").as("поле ввода данных");
     }
     public SelenideElement jUnitTeamImage() {
         return $("[alt='@junit-team']").as("изображение иконки 'ДжейЮнит'");
@@ -34,10 +34,10 @@ public class RepositoriesPage {
     public SelenideElement fixturesTitle() {
         return $("[class='css-truncate-target']").as("название ветки 'Фикстуры'");
     }
-    public SelenideElement newIssueButtonText() {
-        return  $(byText("New issue")).as("текст кнопки 'Новый выпуск'");
+    public SelenideElement examinationReleasesButton() {
+        return  $("[class='js-selected-navigation-item selected subnav-item']").as("проверка кнопки 'Релиза'");
     }
-    public SelenideElement noResultsText() {
-        return $(byText("No results matched your search.")).as("текст 'Нет результатов по вашему поиску'");
+    public SelenideElement ResultsText() {
+        return $("[class='logged-out env-production page-responsive intent-mouse']").as("текст проверки результата");
     }
 }
