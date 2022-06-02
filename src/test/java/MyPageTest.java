@@ -26,7 +26,7 @@ public class MyPageTest {
         TestPages.mainPage.loginField()
                 .sendKeys("DenNoskov");
         TestPages.mainPage.passwordField()
-                .sendKeys("123456789");
+                .sendKeys("12345678");
         TestPages.mainPage.loginButton()
                 .click();
         TestPages.mainPage.headerBanner()

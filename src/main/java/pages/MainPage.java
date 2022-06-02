@@ -29,7 +29,7 @@ public class MainPage {
         return $(byText("Your profile")).as("кнопка 'Мой профиль'");
     }
     public SelenideElement editProfileButton() {
-        return $("[class='btn btn-block js-profile-editable-edit-button']").as("кнопка 'Редактировать профиль'");
+        return $(".btn.btn-block.js-profile-editable-edit-button").as("кнопка 'Редактировать профиль'");
     }
     public SelenideElement warningPopup() {
         return $(".flash.flash-full.flash-error").as("всплывающее предупреждение");

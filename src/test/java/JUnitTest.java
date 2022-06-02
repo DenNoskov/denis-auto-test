@@ -29,7 +29,7 @@ public class JUnitTest {
     public void switchToFeatureBranchTest() {
         TestPages.repositoriesPage.jUnitButton()
                 .click();
-        TestPages.repositoriesPage.readmeLink()
+        TestPages.repositoriesPage.jUnitText()
                 .shouldBe(visible);
         TestPages.repositoriesPage.dropdownJUnitButton()
                 .click();
@@ -40,23 +40,20 @@ public class JUnitTest {
     }
 
         @MethodSource("correctData")
-        @ParameterizedTest(name = "{displayName} {0}")
-        @DisplayName("Позитивня проверка поиска по релизам в репозитории:")
+        @ParameterizedTest(name = "{displayName} :{0}")
+        @DisplayName("Позитивня проверка поиска по релизам в репозитории")
         public void positiveVerificationOfTheSearch(String type, String searchData, String searchResults){
             TestPages.repositoriesPage.jUnitButton()
                     .click();
-            TestPages.repositoriesPage.readmeLink()
+            TestPages.repositoriesPage.jUnitText()
                     .shouldBe(visible);
             TestPages.repositoriesPage.releaseButton()
                     .click();
             TestPages.repositoriesPage.examinationReleasesButton()
                     .shouldBe(visible);
             TestPages.repositoriesPage.inputField()
-                    .click();
-            TestPages.repositoriesPage.inputField()
                     .sendKeys(searchData + Keys.ENTER);
            TestPages.repositoriesPage.ResultsText()
-                    .shouldBe(visible)
                     .shouldHave(text(searchResults));
     }
 

@@ -14,30 +14,30 @@ public class RepositoriesPage {
         return $(byText("junit4")).as("кнопка 'ДжеЮнита4'");
     }
     public SelenideElement dropdownJUnitButton() {
-        return $("[class='btn css-truncate']").as("кнопка выпадающего меню");
+        return $(".btn.css-truncate").as("кнопка выпадающего меню");
     }
     public SelenideElement fixturesBranchButton() {
         return $(byText("fixtures")).as("кнопка переключения на ветку 'Фикстура'");
     }
     public SelenideElement releaseButton() {
-        return  $(byText("Releases")).as("кнопка 'Релизов'");
+        return  $(byText("Releases")).as("кнопка релизов");
     }
     public SelenideElement inputField() {
-        return $("[class='form-control subnav-search-input width-full']").as("поле ввода данных");
+        return $(".form-control.subnav-search-input.width-full").as("поле ввода данных");
     }
     public SelenideElement jUnitTeamImage() {
         return $("[alt='@junit-team']").as("изображение иконки 'ДжейЮнит'");
     }
-    public SelenideElement readmeLink() {
-        return $("[class='Link--primary']").as("линк файла 'ридми'");
+    public SelenideElement jUnitText() {
+        return $("#user-content-junit-4").as("текст 'ДжеЮнит4'");
     }
     public SelenideElement fixturesTitle() {
-        return $("[class='css-truncate-target']").as("название ветки 'Фикстуры'");
+        return $(".btn.css-truncate").as("название ветки 'Фикстуры'");
     }
     public SelenideElement examinationReleasesButton() {
-        return  $("[class='js-selected-navigation-item selected subnav-item']").as("проверка кнопки 'Релиза'");
+        return  $(".js-selected-navigation-item.selected.subnav-item").as("проверка кнопки 'Релиза'");
     }
     public SelenideElement ResultsText() {
-        return $("[class='logged-out env-production page-responsive intent-mouse']").as("текст проверки результата");
+        return $(".clearfix.container-xl.px-3.px-md-4.px-lg-5.mt-4").as("текст проверки результата");
     }
 }
