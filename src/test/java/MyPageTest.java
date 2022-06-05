@@ -1,3 +1,5 @@
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -9,48 +11,70 @@ import java.util.stream.Stream;
 
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@Owner("dennoskov")
+@Feature("Авторизация")
 public class MyPageTest {
 
     @BeforeEach
     public void setup(){
+        step("Открыть сайт https://github.com", () -> {
         open("https://github.com/");
         TestPages.mainPage.mainSignInButton()
                 .click();
+        });
     }
 
     @Test
     @DisplayName("Успешная атворизация")
     public void shouldGoToMyPageTest() {
-        TestPages.mainPage.loginField()
+        step("Заполнить поля инпута и пароля и нажать кнопку авторизации", () -> {
+            TestPages.mainPage.loginField()
                 .sendKeys("DenNoskov");
-        TestPages.mainPage.passwordField()
-                .sendKeys("12345678");
-        TestPages.mainPage.loginButton()
+            TestPages.mainPage.passwordField()
+                .sendKeys("123456789");
+            TestPages.mainPage.loginButton()
                 .click();
-        TestPages.mainPage.headerBanner()
+        });
+
+        step("Проверить, что появился верхний баннер", () -> {
+            TestPages.mainPage.headerBanner()
                 .shouldBe(visible);
-        TestPages.mainPage.dropdownButton()
+        });
+
+        step("Открыть выпадающее меню и перейти в 'Мой профиль'", () -> {
+            TestPages.mainPage.dropdownButton()
                 .click();
-        TestPages.mainPage.yourProfileButton()
+            TestPages.mainPage.yourProfileButton()
                 .click();
-        TestPages.mainPage.editProfileButton()
+        });
+
+        step("Проверить, что появилась кнопка 'Редактировать профиль'", () -> {
+            TestPages.mainPage.editProfileButton()
                 .shouldBe(visible);
+        });
     }
 
     @MethodSource("incorrectCredentials")
     @ParameterizedTest(name = "{displayName} :{0}")
-    @DisplayName("Авторизация с некорректными данными:")
+    @DisplayName("Авторизация с некорректными данными")
     public void shouldNotAuthorizeTest(String type, String phone, String password){
-        TestPages.mainPage.loginField()
+        step("Заполнить поля инпута и пароля и нажать кнопку авторизации", () -> {
+            TestPages.mainPage.loginField()
                 .sendKeys(phone);
-        TestPages.mainPage.passwordField()
+            TestPages.mainPage.passwordField()
                 .sendKeys(password);
-        TestPages.mainPage.loginButton()
+            TestPages.mainPage.loginButton()
                 .click();
-        TestPages.mainPage.warningPopup()
+        });
+
+        step("Проверить, что появилась ошибка", () -> {
+            TestPages.mainPage.warningPopup()
                 .shouldBe(visible);
+        });
+
     }
     static Stream<Arguments> incorrectCredentials() {
         return Stream.of(
