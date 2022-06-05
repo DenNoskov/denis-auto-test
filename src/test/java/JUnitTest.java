@@ -8,8 +8,9 @@ import org.openqa.selenium.Keys;
 
 import java.util.stream.Stream;
 
+import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
-import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.Selenide.open;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
 public class JUnitTest {
@@ -19,6 +20,8 @@ public class JUnitTest {
         open("https://github.com/junit-team");
         TestPages.repositoriesPage.repositoriesButton()
                 .click();
+        TestPages.repositoriesPage.jUnitTeamImage()
+                .shouldBe(visible);
     }
 
     @Test
@@ -26,64 +29,52 @@ public class JUnitTest {
     public void switchToFeatureBranchTest() {
         TestPages.repositoriesPage.jUnitButton()
                 .click();
+        TestPages.repositoriesPage.jUnitText()
+                .shouldBe(visible);
         TestPages.repositoriesPage.dropdownJUnitButton()
                 .click();
         TestPages.repositoriesPage.fixturesBranchButton()
                 .click();
-        TestPages.repositoriesPage.pullRequestsButton()
+        TestPages.repositoriesPage.fixturesTitle()
                 .shouldBe(visible);
     }
 
         @MethodSource("correctData")
         @ParameterizedTest(name = "{displayName} :{0}")
-        @DisplayName("Позитивня проверка поиска по релизам в репозитории:")
-        public void positiveVerificationOfTheSearch(String type, String byNumber, String spelledInTheTitle){
+        @DisplayName("Позитивня проверка поиска по релизам в репозитории")
+        public void positiveVerificationOfTheSearch(String type, String searchData, String searchResults){
             TestPages.repositoriesPage.jUnitButton()
                     .click();
-            TestPages.repositoriesPage.dropdownJUnitButton()
-                    .click();
-            TestPages.repositoriesPage.fixturesBranchButton()
-                    .click();
-            TestPages.repositoriesPage.pullRequestsButton()
+            TestPages.repositoriesPage.jUnitText()
                     .shouldBe(visible);
-            TestPages.repositoriesPage.issuesButton()
+            TestPages.repositoriesPage.releaseButton()
                     .click();
-            TestPages.repositoriesPage.pullRequestsButton()
+            TestPages.repositoriesPage.examinationReleasesButton()
                     .shouldBe(visible);
             TestPages.repositoriesPage.inputField()
-                    .sendKeys(byNumber);
-            TestPages.repositoriesPage.inputField()
-                    .sendKeys(Keys.SPACE);
-            TestPages.repositoriesPage.inputField()
-                    .sendKeys(spelledInTheTitle);
-            TestPages.repositoriesPage.inputField()
-                    .sendKeys(Keys.ENTER);
+                    .sendKeys(searchData + Keys.ENTER);
+           TestPages.repositoriesPage.ResultsText()
+                    .shouldHave(text(searchResults));
     }
 
     static Stream<Arguments> correctData() {
         return Stream.of(
                 arguments(
                         "по цифрам и полному слову",
-                        "1626",
-                        "message"
-                ),
-
-                arguments(
-                        "по цифрам и части слова",
-                        "1619",
-                        "Fea"
+                        "JUnit 4.12 Beta 2",
+                        "JUnit 4.12 Beta 2"
                 ),
 
                 arguments(
                         "по цифрам",
-                        "1701",
-                        ""
+                        "4.12",
+                        "JUnit 4.12"
                 ),
 
                 arguments(
                         "по слову",
-                        "",
-                        "Problem"
+                        "Beta",
+                        "Beta"
                 )
         );
     }

@@ -11,10 +11,10 @@ public class MainPage {
         return $("[href='/login']").as("кнопка логина");
     }
     public SelenideElement loginField() {
-        return $("[id='login_field']").as("поле логина");
+        return $("#login_field").as("поле логина");
     }
     public SelenideElement passwordField() {
-        return $("[id='password']").as("поле пароля");
+        return $("#password").as("поле пароля");
     }
     public SelenideElement loginButton() {
         return $("[name='commit']").as("кнопка входа");
@@ -26,10 +26,10 @@ public class MainPage {
         return $("[aria-label='View profile and more']").as("кнопка выпадающего меню");
     }
     public SelenideElement yourProfileButton() {
-        return $(byText("Your profile")).as("кнопка мой профиль");
+        return $(byText("Your profile")).as("кнопка 'Мой профиль'");
     }
     public SelenideElement editProfileButton() {
-        return $("[class='btn btn-block js-profile-editable-edit-button']").as("кнопка добавить профиль");
+        return $(".btn.btn-block.js-profile-editable-edit-button").as("кнопка 'Редактировать профиль'");
     }
     public SelenideElement warningPopup() {
         return $(".flash.flash-full.flash-error").as("всплывающее предупреждение");
