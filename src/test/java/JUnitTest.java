@@ -43,14 +43,17 @@ public class JUnitTest {
                 .shouldBe(visible);
         });
 
-        step("Открыть выпадающее меню и переключиться на ветку 'Фикстура'", () -> {
+        step("Открыть выпадающее меню", () -> {
             TestPages.repositoriesPage.dropdownJUnitButton()
                 .click();
+        });
+
+        step("Переключиться на ветку 'fixtures'", () -> {
             TestPages.repositoriesPage.fixturesBranchButton()
                 .click();
         });
 
-        step("Проверить, что переключилось на ветку 'Фикстура'", () -> {
+        step("Проверить, что есть название ветки 'fixtures'", () -> {
             TestPages.repositoriesPage.fixturesTitle()
                 .shouldBe(visible);
         });
@@ -68,14 +71,14 @@ public class JUnitTest {
                     .shouldBe(visible);
             });
 
-            step("Перейти в раздел 'Релизы'", () -> {
+            step("Открыть раздел 'Releases'", () -> {
                 TestPages.repositoriesPage.releaseButton()
                     .click();
                 TestPages.repositoriesPage.examinationReleasesButton()
                     .shouldBe(visible);
             });
 
-            step("Ввести данные в поле и произвести поиск", () -> {
+            step("Ввести валидные данные в поле поиск и нажать кнопку 'Enter'", () -> {
                 TestPages.repositoriesPage.inputField()
                     .sendKeys(searchData + Keys.ENTER);
             });

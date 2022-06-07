@@ -44,14 +44,17 @@ public class MyPageTest {
                 .shouldBe(visible);
         });
 
-        step("Открыть выпадающее меню и перейти в 'Мой профиль'", () -> {
+        step("Открыть выпадающее меню", () -> {
             TestPages.mainPage.dropdownButton()
                 .click();
+        });
+
+        step("Открыть раздел 'Your profile'", () -> {
             TestPages.mainPage.yourProfileButton()
                 .click();
         });
 
-        step("Проверить, что появилась кнопка 'Редактировать профиль'", () -> {
+        step("Проверить, что появилась кнопка 'Edit Profile'", () -> {
             TestPages.mainPage.editProfileButton()
                 .shouldBe(visible);
         });
