@@ -1,3 +1,6 @@
+import io.qameta.allure.Feature;
+import io.qameta.allure.Owner;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,50 +14,79 @@ import java.util.stream.Stream;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Condition.visible;
 import static com.codeborne.selenide.Selenide.open;
+import static io.qameta.allure.Allure.step;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
+@Owner("dennoskov")
+@Feature("Проверка репозиториев 'ДжейЮнитТим'")
 public class JUnitTest {
 
     @BeforeEach
     public void setup(){
+        step("Открыть сайт https://github.com/junit-team", () -> {
         open("https://github.com/junit-team");
-        TestPages.repositoriesPage.repositoriesButton()
+            TestPages.repositoriesPage.repositoriesButton()
                 .click();
-        TestPages.repositoriesPage.jUnitTeamImage()
+            TestPages.repositoriesPage.jUnitTeamImage()
                 .shouldBe(visible);
+        });
     }
 
     @Test
+    @Story("Проверка репозитория 'ДжейЮнит4'")
     @DisplayName("Переключение на фича ветку")
     public void switchToFeatureBranchTest() {
-        TestPages.repositoriesPage.jUnitButton()
+        step("Открыть репозиторий 'ДжейЮнит4'", () -> {
+            TestPages.repositoriesPage.jUnitButton()
                 .click();
-        TestPages.repositoriesPage.jUnitText()
+            TestPages.repositoriesPage.jUnitText()
                 .shouldBe(visible);
-        TestPages.repositoriesPage.dropdownJUnitButton()
+        });
+
+        step("Открыть выпадающее меню", () -> {
+            TestPages.repositoriesPage.dropdownJUnitButton()
                 .click();
-        TestPages.repositoriesPage.fixturesBranchButton()
+        });
+
+        step("Переключиться на ветку 'fixtures'", () -> {
+            TestPages.repositoriesPage.fixturesBranchButton()
                 .click();
-        TestPages.repositoriesPage.fixturesTitle()
+        });
+
+        step("Проверить, что есть название ветки 'fixtures'", () -> {
+            TestPages.repositoriesPage.fixturesTitle()
                 .shouldBe(visible);
+        });
     }
 
         @MethodSource("correctData")
         @ParameterizedTest(name = "{displayName} :{0}")
+        @Story("Проверка релизов в репозитории 'ДжейЮнит4'")
         @DisplayName("Позитивня проверка поиска по релизам в репозитории")
         public void positiveVerificationOfTheSearch(String type, String searchData, String searchResults){
-            TestPages.repositoriesPage.jUnitButton()
+            step("Открыть репозиторий 'ДжейЮнит4'", () -> {
+                TestPages.repositoriesPage.jUnitButton()
                     .click();
-            TestPages.repositoriesPage.jUnitText()
+                TestPages.repositoriesPage.jUnitText()
                     .shouldBe(visible);
-            TestPages.repositoriesPage.releaseButton()
+            });
+
+            step("Открыть раздел 'Releases'", () -> {
+                TestPages.repositoriesPage.releaseButton()
                     .click();
-            TestPages.repositoriesPage.examinationReleasesButton()
+                TestPages.repositoriesPage.examinationReleasesButton()
                     .shouldBe(visible);
-            TestPages.repositoriesPage.inputField()
+            });
+
+            step("Ввести валидные данные в поле поиск и нажать кнопку 'Enter'", () -> {
+                TestPages.repositoriesPage.inputField()
                     .sendKeys(searchData + Keys.ENTER);
-           TestPages.repositoriesPage.ResultsText()
+            });
+
+            step("Проверить, что поиск прощёл успешно", () -> {
+                TestPages.repositoriesPage.ResultsText()
                     .shouldHave(text(searchResults));
+            });
     }
 
     static Stream<Arguments> correctData() {
